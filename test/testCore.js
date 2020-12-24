@@ -3,9 +3,6 @@ var should = require('should')
 
 console.log(verb);
 
-// necessary for multi-threading
-verb.exe.WorkerPool.basePath = process.cwd() + "/build/js/";
-
 // some testing utilities
 function vecShouldBe( expected, test, tol ){
 

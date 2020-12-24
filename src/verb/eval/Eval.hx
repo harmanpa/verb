@@ -29,7 +29,7 @@ class Eval {
     //
     //* a Vector represented by an array of length (dim)
 
-    public static function rationalCurveTangent( curve : NurbsCurveData, u : Float ) : Array<Float> {
+    public static function rationalCurveTangent( curve : NurbsCurveData, u : Float ) : Vector {
         var derivs = rationalCurveDerivatives( curve, u, 1 );
         return derivs[1];
     }
@@ -46,7 +46,7 @@ class Eval {
     //
     //* a Vector represented by an array of length (dim)
 
-    public static function rationalSurfaceNormal( surface : NurbsSurfaceData, u : Float, v : Float) : Array<Float> {
+    public static function rationalSurfaceNormal( surface : NurbsSurfaceData, u : Float, v : Float) : Vector {
         var derivs = rationalSurfaceDerivatives( surface, u, v, 1 );
         return Vec.cross( derivs[1][0], derivs[0][1] );
     }
@@ -67,16 +67,16 @@ class Eval {
     public static function rationalSurfaceDerivatives( 	surface : NurbsSurfaceData,
                                                         u : Float,
                                                         v : Float,
-                                                        numDerivs : Int = 1) : Array<Array<Array<Float>>> {
+                                                        numDerivs : Int = 1) : Array<Array<Vector>> {
 
         var ders = surfaceDerivatives( surface, u, v, numDerivs)
         , Aders = rational2d(ders)
         , wders = weight2d(ders)
-        , SKL = new Array<Array<Array<Float>>>()
+        , SKL = new Array<Array<Vector>>()
         , dim = Aders[0][0].length;
 
         for (k in 0...numDerivs+1){
-            SKL.push( new Array<Array<Float>>() );
+            SKL.push( new Array<Vector>() );
 
             for (l in 0...numDerivs-k+1){
                 var v = Aders[k][l];
@@ -153,7 +153,7 @@ class Eval {
             for (i in 1...k+1) {
                 Vec.subMulMutate( v, Binomial.get(k, i) * wders[i], CK[k-i] );
             }
-            
+
             Vec.mulMutate( 1/wders[0], v );
             CK.push( v ); //demogenize
         }
@@ -451,11 +451,11 @@ class Eval {
                 var ders = allders[i][j]
                 , Aders = rational2d(ders)
                 , wders = weight2d(ders)
-                , SKL = new Array<Array<Array<Float>>>()
+                , SKL = new Array<Array<Vector>>()
                 , dim = Aders[0][0].length;
 
                 for (k in 0...numDerivs1){
-                    SKL.push( new Array<Array<Float>>() );
+                    SKL.push( new Array<Vector>() );
 
                     for (l in 0...numDerivs1-k){
                         var v = Aders[k][l];
@@ -476,7 +476,7 @@ class Eval {
                             Vec.subMulMutate( v, Binomial.get(k, i), v2 );
 
                         }
-                            
+
                         Vec.mulMutate(1 / wders[0][0], v );
                         SKL[k].push( v ); //demogenize
                     }
@@ -598,7 +598,7 @@ class Eval {
         return pts;
     }
 
-    private static function regularlySpacedBasisFunctions( degree : Int, knots : KnotArray, divs : Int ) : Pair<Array<Int>, Array<Array<Float>>> {
+    private static function regularlySpacedBasisFunctions( degree : Int, knots : KnotArray, divs : Int ) : Pair<Array<Int>, Array<Vector>> {
 
         var n : Int = knots.length - degree - 2;
         var span : Float = (knots.last() - knots[0]) / divs;
@@ -617,7 +617,7 @@ class Eval {
             u += span;
         }
 
-        return new Pair<Array<Int>, Array<Array<Float>>>( knotspans, bases );
+        return new Pair<Array<Int>, Array<Vector>>( knotspans, bases );
     }
 
     private static function regularlySpacedDerivativeBasisFunctions(degree : Int, knots : KnotArray, divs : Int){
@@ -639,7 +639,7 @@ class Eval {
             u += span;
         }
 
-        return new Pair<Array<Int>, Array<Array<Array<Float>>>>( knotspans, bases );
+        return new Pair<Array<Int>, Array<Array<Vector>>>( knotspans, bases );
     }
 
     private static function surfacePointGivenBasesKnotSpans( degreeU : Int,
@@ -647,12 +647,12 @@ class Eval {
                                                              controlPoints : Array<Array<Point>>,
                                                              knotSpanU : Int,
                                                              knotSpanV : Int,
-                                                             basesU : Array<Float>,
-                                                             basesV : Array<Float>,
+                                                             basesU : Vector,
+                                                             basesV : Vector,
                                                              dim : Int) : Point {
 
         var position = Vec.zeros1d( dim )
-        , temp : Array<Float>;
+        , temp : Vector;
 
         // could be precomputed
         var uind = knotSpanU - degreeU;
@@ -679,8 +679,8 @@ class Eval {
                                                                   controlPoints : Array<Array<Point>>,
                                                                   knotSpanU : Int,
                                                                   knotSpanV : Int,
-                                                                  basesU : Array<Array<Float>>,
-                                                                  basesV : Array<Array<Float>>,
+                                                                  basesU : Array<Vector>,
+                                                                  basesV : Array<Vector>,
                                                                   dim : Int,
                                                                   numDerivs : Int ){
 
@@ -946,7 +946,7 @@ class Eval {
     //
     //* 2d array of basis and derivative values of size (n+1, p+1) The nth row is the nth derivative and the first row is made up of the basis function values.
 
-    public static function derivativeBasisFunctions( u : Float, degree : Int, knots : KnotArray ): Array<Array<Float>>
+    public static function derivativeBasisFunctions( u : Float, degree : Int, knots : KnotArray ): Array<Vector>
     {
         var knotSpan_index = knotSpan( degree, u, knots )
         , m = knots.length - 1
@@ -971,7 +971,7 @@ class Eval {
     //* 2d array of basis and derivative values of size (n+1, p+1) The nth row is the nth derivative and the first row is made up of the basis function values.
 
     public static function derivativeBasisFunctionsGivenNI( knotIndex : Int, u : Float, p : Int,
-                                                            n : Int, knots : KnotArray ) : Array<Array<Float>>
+                                                            n : Int, knots : KnotArray ) : Array<Vector>
     {
         var ndu = Vec.zeros2d( p+1, p+1 )
         , left = Vec.zeros1d( p + 1 )
@@ -1082,7 +1082,7 @@ class Eval {
     //* list of non-vanishing basis functions
     //
 
-    public static function basisFunctions( u : Float, degree : Int, knots : KnotArray) : Array<Float>
+    public static function basisFunctions( u : Float, degree : Int, knots : KnotArray) : Vector
     {
         var knotSpan_index = knotSpan(degree, u, knots);
         return basisFunctionsGivenKnotSpanIndex( knotSpan_index, u, degree, knots );
@@ -1106,7 +1106,7 @@ class Eval {
     public static function basisFunctionsGivenKnotSpanIndex( knotSpan_index : Int,
                                                                   u : Float,
                                                                   degree : Int,
-                                                                  knots : KnotArray ) : Array<Float>
+                                                                  knots : KnotArray ) : Vector
     {
         var basisFunctions = Vec.zeros1d( degree + 1 );
         var left = Vec.zeros1d( degree + 1 );
@@ -1146,7 +1146,7 @@ class Eval {
     //* the index of the knot span
     //
 
-    public static function knotSpan( degree : Int, u : Float, knots : Array<Float> ) : Int
+    public static function knotSpan( degree : Int, u : Float, knots : Vector ) : Int
     {
         return knotSpanGivenN(knots.length - degree - 2, degree, u, knots);
     }
@@ -1166,7 +1166,7 @@ class Eval {
     //* the index of the knot span
     //
 
-    public static function knotSpanGivenN( n : Int, degree : Int, u : Float, knots : Array<Float> ) : Int
+    public static function knotSpanGivenN( n : Int, degree : Int, u : Float, knots : Vector ) : Int
     {
         if ( u > knots[n+1] - Constants.EPSILON )
         {
@@ -1264,7 +1264,7 @@ class Eval {
     //
     //* a point represented by an array pi with length (dim)
 
-    public static function weight1d( homoPoints : Array<Point> ) : Array<Float> {
+    public static function weight1d( homoPoints : Array<Point> ) : Vector {
         var dim = homoPoints[0].length - 1;
         return homoPoints.map(function(x){ return x[dim]; });
     }
@@ -1280,7 +1280,7 @@ class Eval {
     //
     //*  array of arrays of points, each represented by an array pi with length (dim)
 
-    public static function weight2d( homoPoints : Array<Array<Point>> ) : Array<Array<Float>> {
+    public static function weight2d( homoPoints : Array<Array<Point>> ) : Array<Vector> {
         return homoPoints.map(weight1d);
     }
 
@@ -1325,14 +1325,14 @@ class Eval {
     //i the ith control point weight and pi is the ith control point,
     //hence the dimension of the point is dim + 1
 
-    public static function homogenize1d( controlPoints : Array<Point>, weights : Array<Float> = null) : Array<Point> {
+    public static function homogenize1d( controlPoints : Array<Point>, weights : Vector = null) : Array<Point> {
 
         var rows = controlPoints.length
         , dim = controlPoints[0].length
         , homo_controlPoints = new Array<Point>()
         , wt : Float = 0.0
         , ref_pt = new Point()
-        , weights = weights != null ? weights : Vec.rep( controlPoints.length, 1.0 );
+        , weights = weights != null ? weights : Vec.fill( controlPoints.length, 1.0 );
 
         for (i in 0...rows) {
 
@@ -1366,10 +1366,10 @@ class Eval {
     // (m x n x dim+1)
 
     public static function homogenize2d( controlPoints : Array<Array<Point>>,
-                                         weights: Array<Array<Float>> = null ) : Array<Array<Point>> {
+                                         weights: Array<Vector> = null ) : Array<Array<Point>> {
         var rows = controlPoints.length
         , homo_controlPoints = new Array<Array<Point>>()
-        , weights = weights != null ? weights : [ for (i in 0...rows ) Vec.rep( controlPoints[0].length, 1.0 ) ];
+        , weights = weights != null ? weights : [ for (i in 0...rows ) Vec.fill( controlPoints[0].length, 1.0 ) ];
 
         for (i in 0...rows) {
             homo_controlPoints.push( homogenize1d(controlPoints[i], weights[i]) );

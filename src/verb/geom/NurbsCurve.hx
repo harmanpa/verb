@@ -3,12 +3,9 @@ package verb.geom;
 import verb.eval.Check;
 import verb.core.Vec;
 import verb.eval.Make;
-import promhx.Promise;
 
 import verb.core.Data;
 import verb.core.Mat;
-
-import verb.exe.Dispatcher;
 
 import verb.core.ArrayExtensions;
 using verb.core.ArrayExtensions;
@@ -25,11 +22,6 @@ import verb.core.Serialization;
 // This object is deliberately constrained to be immutable. The methods to inspect the properties of this class deliberately return copies. `asNurbs` can
 // be used to obtain a simplified NurbsCurveData object that can be used with `verb.core` or for serialization purposes.
 //
-// Under the hood, this type takes advantage of verb's asynchronous runtime using the _Async methods. Calling one of these
-// methods returns a `Promise` instead of the value. This allows you to run the computation in a background thread and obtain the value asynchronously.
-//
-// You can find further documentation for using `Promise`'s at [https://github.com/jdonaldson/promhx](https://github.com/jdonaldson/promhx).
-
 @:expose("geom.NurbsCurve")
 class NurbsCurve extends SerializableBase implements ICurve {
 
@@ -63,7 +55,7 @@ class NurbsCurve extends SerializableBase implements ICurve {
     public static function byKnotsControlPointsWeights( degree : Int,
                                                         knots : KnotArray,
                                                         controlPoints : Array<Point>,
-                                                        weights : Array<Float> = null ) : NurbsCurve {
+                                                        weights : Vector = null ) : NurbsCurve {
         return new NurbsCurve( new NurbsCurveData( degree, knots.copy(), Eval.homogenize1d( controlPoints, weights) ) );
     }
 
@@ -96,7 +88,7 @@ class NurbsCurve extends SerializableBase implements ICurve {
     public function controlPoints() : Array<Point> { return Eval.dehomogenize1d(_data.controlPoints); }
 
     //Array of weight values
-    public function weights() : Array<Float> { return Eval.weight1d(_data.controlPoints); }
+    public function weights() : Vector { return Eval.weight1d(_data.controlPoints); }
 
     //Obtain a copy of the underlying data structure for the Curve. Used with verb.core.
     //
@@ -142,13 +134,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return new NurbsCurve( Modify.rationalCurveTransform( _data, mat ) );
     }
 
-    //The async version of `transform`
-
-    public function transformAsync( mat : Matrix ) : Promise<NurbsCurve> {
-        return Dispatcher.dispatchMethod( Modify, 'rationalCurveTransform', [ _data,  mat ] )
-            .then(function(x){ return new NurbsCurve(x); });
-    }
-
     //Sample a point at the given parameter
     //
     //**params**
@@ -161,12 +146,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function point( u : Float ) : Point {
         return Eval.rationalCurvePoint( _data, u );
-    }
-
-    //The async version of `point`
-
-    public function pointAsync( u : Float) : Promise<Point> {
-        return Dispatcher.dispatchMethod( Eval, 'rationalCurvePoint', [ _data,  u ] );
     }
 
     //Obtain the curve tangent at the given parameter.  This is the first derivative and is
@@ -184,12 +163,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return Eval.rationalCurveTangent( _data, u );
     }
 
-    //The async version of `tangent`
-
-    public function tangentAsync( u : Float ) : Promise<Vector> {
-        return Dispatcher.dispatchMethod( Eval, 'rationalCurveTangent', [ _data, u ] );
-    }
-
     //Get derivatives at a given parameter
     //
     //**params**
@@ -203,12 +176,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function derivatives( u : Float, numDerivs : Int = 1 ) : Array<Vector> {
         return Eval.rationalCurveDerivatives( _data, u, numDerivs );
-    }
-
-    //The async version of `derivatives`
-
-    public function derivativesAsync( u : Float, numDerivs : Int = 1 ) : Promise<Array<Vector>> {
-        return Dispatcher.dispatchMethod( Eval, 'rationalCurveDerivatives', [ _data, u, numDerivs ] );
     }
 
     //Determine the closest point on the curve to the given point
@@ -225,12 +192,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return Analyze.rationalCurveClosestPoint( _data, pt );
     }
 
-    //The async version of `closestPoint`
-
-    public function closestPointAsync( pt : Point ) : Promise<Point> {
-        return Dispatcher.dispatchMethod( Analyze, 'rationalCurveClosestPoint', [ _data,  pt ] );
-    }
-
     //Determine the closest parameter on the curve to the given point
     //
     //**params**
@@ -245,12 +206,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return Analyze.rationalCurveClosestParam( _data, pt );
     }
 
-    //The async version of `length`
-
-    public function closestParamAsync( pt : Dynamic ) : Promise<Point> {
-        return Dispatcher.dispatchMethod( Analyze, 'rationalCurveClosestParam', [ _data,  pt ] );
-    }
-
     //Determine the arc length of the curve
     //
     //**returns**
@@ -259,12 +214,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function length() : Float {
         return Analyze.rationalCurveArcLength( _data );
-    }
-
-    //The async version of `length`
-
-    public function lengthAsync() : Promise<Float> {
-        return Dispatcher.dispatchMethod( Analyze, 'rationalCurveArcLength', [ _data ] );
     }
 
     //Determine the arc length of the curve at the given parameter
@@ -281,12 +230,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return Analyze.rationalCurveArcLength( _data, u );
     }
 
-    //The async version of `lengthAtParam`
-
-    public function lengthAtParamAsync() : Promise<Float> {
-        return Dispatcher.dispatchMethod( Analyze, 'rationalCurveArcLength', [ _data ] );
-    }
-
     //Determine the parameter of the curve at the given arc length
     //
     //**params**
@@ -299,12 +242,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function paramAtLength( len : Float, tolerance : Float = null ) : Float {
         return Analyze.rationalCurveParamAtArcLength( _data, len, tolerance );
-    }
-
-    //The async version of `paramAtLength`
-
-    public function paramAtLengthAsync( len : Float, tolerance : Float = null ) : Promise<Float> {
-        return Dispatcher.dispatchMethod( Analyze, 'rationalCurveParamAtArcLength', [ _data, len, tolerance ] );
     }
 
     //Determine the parameters necessary to divide the curve into equal arc length segments
@@ -321,12 +258,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return Divide.rationalCurveByEqualArcLength( _data, divisions );
     }
 
-    //The async version of `divideByEqualArcLength``
-
-    public function divideByEqualArcLengthAsync( divisions : Int ) : Promise<Array<CurveLengthSample>> {
-        return Dispatcher.dispatchMethod( Divide, 'rationalCurveByEqualArcLength', [ _data, divisions ] );
-    }
-
     //Given the distance to divide the curve, determine the parameters necessary to divide the curve into equal arc length segments
     //
     //**params**
@@ -339,12 +270,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function divideByArcLength( arcLength : Float ) : Array<CurveLengthSample> {
         return Divide.rationalCurveByArcLength( _data, arcLength );
-    }
-
-    //The async version of `divideByArcLength`
-
-    public function divideByArcLengthAsync( divisions : Int ) : Promise<Array<CurveLengthSample>> {
-        return Dispatcher.dispatchMethod( Divide, 'rationalCurveByArcLength', [ _data, divisions ] );
     }
 
     //Split the curve at the given parameter
@@ -361,15 +286,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
         return Divide.curveSplit( _data, u ).map(function(x){ return new NurbsCurve(x); });
     }
 
-    // The async version of `split`
-
-    public function splitAsync( u : Float ) : Promise<Array<NurbsCurve>> {
-        return Dispatcher.dispatchMethod( Divide, 'curveSplit', [ _data, u ])
-        .then(function(cs : Array<NurbsCurveData>) : Array<NurbsCurve>{
-            return cs.map(function(x){ return new NurbsCurve(x); });
-        });
-    }
-
     //Reverse the parameterization of the curve
     //
     //**returns**
@@ -378,13 +294,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function reverse() : NurbsCurve {
         return new NurbsCurve( Modify.curveReverse( _data ) );
-    }
-
-    // The async version of `reverse`
-
-    public function reverseAsync() : Promise<NurbsCurve> {
-        return Dispatcher.dispatchMethod( Modify, 'curveReverse', [ _data ])
-            .then(function(c){ return new NurbsCurve(c); });
     }
 
     //Tessellate a curve at a given tolerance
@@ -399,12 +308,6 @@ class NurbsCurve extends SerializableBase implements ICurve {
 
     public function tessellate(tolerance : Float = null) : Array<Point> {
         return Tess.rationalCurveAdaptiveSample( _data, tolerance, false );
-    }
-
-    // The async version of `tessellate`
-
-    public function tessellateAsync( tolerance : Float = null ) : Promise<Array<Point>> {
-        return Dispatcher.dispatchMethod( Tess, 'rationalCurveAdaptiveSample', [ _data, tolerance, false ] );
     }
 
 }

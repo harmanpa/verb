@@ -132,10 +132,10 @@ class Make {
         }
 
         //knots
-        var knotsU = curves[0].knots;
+        var knotsU: KnotArray = curves[0].knots;
 
-        var knotsV = [];
-        var controlPoints = [];
+        var knotsV: KnotArray = [];
+        var controlPoints: Array<Array<Point>> = [];
         for ( i in 0...curves[0].controlPoints.length ){
 
             //extract the ith control pt of each curve
@@ -169,7 +169,7 @@ class Make {
     //
     //* NurbsSurfaceData object
 
-    public static function rationalBezierCurve( controlPoints : Array<Point>, weights : Array<Float> = null ) : NurbsCurveData {
+    public static function rationalBezierCurve( controlPoints : Array<Point>, weights : Vector = null ) : NurbsCurveData {
 
         var degree = controlPoints.length - 1;
 
@@ -362,7 +362,7 @@ class Make {
 
     public static function polyline( pts : Array<Point>) : NurbsCurveData {
 
-        var knots = [0.0,0.0];
+        var knots: Vector = [0.0,0.0];
         var lsum = 0.0;
 
         for (i in 0...pts.length-1) {
@@ -394,8 +394,8 @@ class Make {
 
     public static function extrudedSurface( axis : Point, length : Float, profile : NurbsCurveData ) : NurbsSurfaceData {
 
-        var controlPoints = [[],[],[]]
-        , weights = [[],[],[]];
+        var controlPoints: Array<Array<Point>> = [[],[],[]];
+        var weights: Array<Vector> = [[],[],[]];
 
         var prof_controlPoints = Eval.dehomogenize1d( profile.controlPoints );
         var prof_weights = Eval.weight1d( profile.controlPoints );
@@ -628,7 +628,7 @@ class Make {
 
     }
 
-    public static function rationalInterpCurve( points : Array<Array<Float>>,
+    public static function rationalInterpCurve( points : Array<Vector>,
                                                 degree : Int = 3,
                                                 homogeneousPoints : Bool = false,
                                                 start_tangent : Point = null,
@@ -701,8 +701,8 @@ class Make {
         if (hasTangents){
             var ln = A[0].length - 2;
 
-            var tanRow0 = [-1.0,1.0].concat( Vec.zeros1d( ln ) );
-            var tanRow1 = Vec.zeros1d( ln ).concat( [-1.0,1.0] );
+            var tanRow0: Vector = [-1.0,1.0].concat( Vec.zeros1d( ln ) );
+            var tanRow1: Vector = Vec.zeros1d( ln ).concat( [-1.0,1.0] );
 
             A.spliceAndInsert( 1, 0, tanRow0 );
             A.spliceAndInsert( A.length-1, 0, tanRow1 );
@@ -735,7 +735,7 @@ class Make {
             xs.push(x);
         }
 
-        var controlPts = Mat.transpose(xs);
+        var controlPts: Array<Point> = Mat.transpose(xs);
 
         if (!homogeneousPoints){
             var weights = Vec.rep(controlPts.length, 1.0);

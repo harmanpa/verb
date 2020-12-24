@@ -33,7 +33,7 @@ class Check {
     //
     //* Whether the array is a valid knot vector or knot
 
-    public static function isValidKnotVector(vec : Array<Float>, degree : Int) : Bool {
+    public static function isValidKnotVector(vec : Vector, degree : Int) : Bool {
 
         if (vec.length == 0) return false;
         if (vec.length < (degree + 1) * 2 ) return false;
@@ -64,7 +64,7 @@ class Check {
     //
     //* Whether the array is non-decreasing
 
-    public static function isNonDecreasing(vec : Array<Float>){
+    public static function isNonDecreasing(vec : Vector){
         var rep = vec.first();
         for ( i in 0...vec.length ){
             if (vec[i] < rep - Constants.EPSILON ) return false;

@@ -1,5 +1,5 @@
--lib promhx
 -main verb.Verb
 -cp src
 -js build/js/verbHaxe.js
 -dce std
+-D js-es=6

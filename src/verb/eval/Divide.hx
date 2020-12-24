@@ -31,7 +31,7 @@ class Divide {
         , controlPoints;
 
         if (!useV) {
-            controlPoints = Mat.transpose( surface.controlPoints );
+            controlPoints = Mat.transposeN( surface.controlPoints );
             knots = surface.knotsU;
             degree = surface.degreeU;
         } else {
@@ -59,8 +59,8 @@ class Divide {
         var knots1 = res.knots.slice( s + 1 );
 
         if (!useV){
-            newpts0 = Mat.transpose( newpts0 );
-            newpts1 = Mat.transpose( newpts1 );
+            newpts0 = Mat.transposeN( newpts0 );
+            newpts1 = Mat.transposeN( newpts1 );
 
             return [ new NurbsSurfaceData(degree, surface.degreeV, knots0, surface.knotsV.copy(), newpts0 ),
             new NurbsSurfaceData(degree, surface.degreeV, knots1, surface.knotsV.copy(), newpts1 ) ];
@@ -88,7 +88,7 @@ class Divide {
         , controlPoints = curve.controlPoints
         , knots = curve.knots;
 
-        var knots_to_insert = [for (i in 0...degree+1) u];
+        var knots_to_insert: Vector = [for (i in 0...degree+1) u];
         var res = Modify.curveKnotRefine( curve, knots_to_insert );
 
         var s = Eval.knotSpan( degree, u, knots );

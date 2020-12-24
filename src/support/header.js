@@ -29,15 +29,8 @@
     var isNode=new Function("try {return this===global;}catch(e){return false;}");
     var isWebworker=new Function("try {return typeof importScripts === 'function';}catch(e){return false;}");
 
-    // node.js context, but not WebWorker
-    if ( isNode() && !isWebworker() ){
-        Worker = require('webworker-threads').Worker;
-    }
-
     // WebWorker or node.js context
     if ( isNode() || isWebworker() ){
-
-        var window = global; // required for promhx
 
         // WebWorker
         if ( isWebworker() ){

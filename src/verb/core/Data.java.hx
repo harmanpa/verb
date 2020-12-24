@@ -1,6 +1,9 @@
 package verb.core;
 
 import verb.core.Serialization;
+import java.NativeArray;
+import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 
 // A `Point` in verb is represented simply by an array of floating point numbers.
 //
@@ -12,13 +15,100 @@ typedef Point = Vector;
 //
 // So, in JavaScript, one would write simply `[1,0,0]` to create the a unit vector in the x direction
 
-typedef Vector = Array<Float>
+abstract Vector(ArrayRealVector) {
+  public function new(v: ArrayRealVector = null) {
+      this = v;
+  }
+
+  @:from
+  static public function fromArray(a: Array<Float>): Vector {
+    var v: Vector = new Vector(new ArrayRealVector(a.length));
+    for (i in 0...a.length) {
+      v[i] = a[i];
+    }
+    return v;
+  }
+
+  @:to
+  public inline function toArray(): Array<Float> {
+    var out: Array<Float> = [];
+    for (i in 0...this.getDimension()) {
+          out.push(this.getEntry(i));
+        }
+        return out;
+  }
+
+  @:arrayAccess
+  public inline function get(key: Int): Float {
+    return this.getEntry(key);
+  }
+
+  @:arrayAccess
+  public inline function arrayWrite(k: Int, v: Float): Float {
+      this.setEntry(k, v);
+      return v;
+  }
+
+  public var length(get, never): Int;
+
+  public function get_length(): Int {
+      return this.getDimension();
+  }
+
+  public inline function first(): Float {
+      return this.getEntry(0);
+  }
+
+  public inline function last(): Float {
+      return this.getEntry(this.getDimension() - 1);
+  }
+
+  public inline function slice(start: Int, end: Int = null): Vector {
+      if(end==null) {
+        end = this.getDimension() - start;
+      }
+      return new Vector(new ArrayRealVector(this.getSubVector(start, end)));
+  }
+
+  public inline function copy(): Vector {
+      return new Vector(new ArrayRealVector(this));
+  }
+
+  public inline function map<S>(f: Float -> S): Array<S> {
+      var out: Array<S> = new Array<S>();
+      for (i in 0...this.getDimension()) {
+        out.push(f(this.getEntry(i)));
+      }
+      return out;
+  }
+
+  public inline function fold(f: (Float, Float) -> Float, s: Float = 0): Float {
+      var out: Float = s;
+      for (i in 0...this.getDimension()) {
+        out = f(out, this.getEntry(i));
+      }
+      return out;
+  }
+
+  public inline function push(v: Float): Int {
+     this = new ArrayRealVector(this.append(v));
+     return this.getDimension();
+  }
+
+  private inline function extract(): ArrayRealVector {
+    return this;
+  }
+
+  public inline function concat(v: Vector): Vector {
+     return new Vector(new ArrayRealVector(this.append(v.extract())));
+  }
+}
 
 // `Matrix` is represented by a nested array of floating point number arrays
 //
 // So, in JavaScript, one would write simply `[[1,0],[0,1]]` to create a 2x2 identity matrix
 
-typedef Matrix = Array<Vector>
+typedef Matrix = Array<Vector>;
 
 // A `KnotArray` is a non-decreasing sequence of floating point . Use the methods in `Check` to validate `KnotArray`'s
 
@@ -71,7 +161,7 @@ class NurbsCurveData extends SerializableBase {
     public var controlPoints : Array<Point>;
 
     //array of nondecreasing knot values
-    public var knots : Array<Float>;
+    public var knots : KnotArray;
 
 }
 
@@ -148,7 +238,7 @@ class PolylineData extends SerializableBase {
     public var points : Array<Point>;
 
     // The parameters of the individual points
-    public var params : Array<Float>;
+    public var params : Vector;
 
     public function new(points, params){
         this.points = points;

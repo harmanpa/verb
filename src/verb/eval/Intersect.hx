@@ -235,12 +235,12 @@ class Intersect {
         var y1 = bb.max[1];
 
         var span = Vec.span( min, max, step );
-        var slices = [];
+        var slices: Array<Array<Array<MeshIntersectionPoint>>> = [];
 
         for ( z in span ){
-            var pts = [ [x0,y0,z], [x1,y0,z], [x1,y1,z], [x0,y1,z] ];
-            var uvs = [ [0.0,0.0], [1.0,0.0], [1.0,1.0], [0.0,1.0] ];
-            var faces = [ [ 0,1,2 ],[0,2,3] ];
+            var pts: Array<Point> = [ [x0,y0,z], [x1,y0,z], [x1,y1,z], [x0,y1,z] ];
+            var uvs: Array<UV> = [ [0.0,0.0], [1.0,0.0], [1.0,1.0], [0.0,1.0] ];
+            var faces: Array<Tri> = [ [ 0,1,2 ],[0,2,3] ];
             var plane = new MeshData( faces, pts, null, uvs );
 
             slices.push( Intersect.meshes( mesh, plane, bbtree ) );
@@ -375,7 +375,7 @@ class Intersect {
         }
 
         //make our tree
-        return new KdTree(treePoints, Vec.distSquared);
+        return new KdTree<MeshIntersectionPoint>(treePoints, Vec.distSquared);
     }
 
     //Given a segment end
@@ -394,9 +394,9 @@ class Intersect {
         //we expect one result to be self, one to be neighbor and no more
         var adj = tree.nearest(segEnd.point, numResults, Constants.EPSILON)
         .filter(function(r){
-            return segEnd != r.item0.obj;
+            return segEnd != r.obj.obj;
         })
-        .map(function(r){ return r.item0.obj; });
+        .map(function(r){ return r.obj.obj; });
 
         //if its not unique (i.e. were at a branching point) we dont return it
         return (adj.length == 1) ? adj[0] : null;
@@ -468,10 +468,10 @@ class Intersect {
 
     public static function curveAndSurfaceWithEstimate(    curve : NurbsCurveData,
                                                            surface : NurbsSurfaceData,
-                                                           start_params : Array<Float>,
+                                                           start_params : Vector,
                                                            tol : Float = 1e-3 ) : CurveSurfaceIntersection {
 
-        var objective = function(x) {
+        var objective = function(x: Vector): Float {
             var p1 = Eval.rationalCurvePoint( curve, x[0])
             , p2 = Eval.rationalSurfacePoint( surface, x[1], x[2] )
             , p1_p2 = Vec.sub(p1, p2);
@@ -498,7 +498,7 @@ class Intersect {
         //df/du = 2 * dr/du . r(u,v,t)
         //df/dv = 2 * dr/dv . r(u,v,t)
 
-        var grad = function(x){
+        var grad = function(x: Vector): Vector {
 
             var dc = Eval.rationalCurveDerivatives( curve, x[0], 1 )
                 , ds = Eval.rationalSurfaceDerivatives( surface, x[1], x[2], 1 );
@@ -515,10 +515,10 @@ class Intersect {
         }
 
         var sol_obj = Minimizer.uncmin( objective, start_params, tol*tol, grad );
-        var final = sol_obj.solution;
+        var finalSolution = sol_obj.solution;
 
-        return new CurveSurfaceIntersection( final[0], [ final[1], final[2] ],
-            Eval.rationalCurvePoint( curve, final[0] ), Eval.rationalSurfacePoint( surface, final[1], final[2]) );
+        return new CurveSurfaceIntersection( finalSolution[0], [ finalSolution[1], finalSolution[2] ],
+            Eval.rationalCurvePoint( curve, finalSolution[0] ), Eval.rationalSurfacePoint( surface, finalSolution[1], finalSolution[2]) );
     }
 
     //Approximate the intersection of a polyline and mesh while maintaining parameter information
@@ -579,7 +579,7 @@ class Intersect {
 
         var atrees = [];
         var btrees = [];
-        
+
         atrees.push(ai);
         btrees.push(bi);
 
@@ -601,37 +601,37 @@ class Intersect {
                 continue;
             } else if (ai && !bi) {
                 var bs = b.split();
-                
+
                 atrees.push( a );
                 btrees.push( bs.item1 );
-                              
+
                 atrees.push( a );
                 btrees.push( bs.item0 );
-               
+
                 continue;
             } else if (!ai && bi){
                 var as = a.split();
-                
+
                 atrees.push( as.item1 );
                 btrees.push( b );
-                 
+
                 atrees.push( as.item0 );
                 btrees.push( b );
-               
+
                 continue;
             }
 
             var as = a.split(), bs = b.split();
-            
+
             atrees.push( as.item1 );
             btrees.push( bs.item1 );
-  
+
             atrees.push( as.item1 );
             btrees.push( bs.item0 );
-           
+
             atrees.push( as.item0 );
             btrees.push( bs.item1 );
- 
+
             atrees.push( as.item0 );
             btrees.push( bs.item0 );
 
@@ -709,7 +709,7 @@ class Intersect {
         //df/du = 2 * dr/du . r(u,t)
         //df/dt = 2 * dr/dt . r(u,t)
 
-        var grad = function(x){
+        var grad = function(x: Vector): Vector {
             var dc0 = Eval.rationalCurveDerivatives( curve0, x[0], 1 )
             , dc1 = Eval.rationalCurveDerivatives( curve1, x[1], 1 );
 

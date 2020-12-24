@@ -13,11 +13,11 @@ import verb.core.Data;
 @:expose("core.Vec")
 class Vec {
 
-    public static function angleBetween(a : Array<Float>, b : Array<Float>) : Float{
+    public static function angleBetween(a : Vector, b : Vector) : Float {
         return Math.acos( dot(a, b) / ( norm(a) * norm(b) )  );
     }
 
-    public static function positiveAngleBetween(a : Array<Float>, b : Array<Float>, n : Array<Float>) : Float{
+    public static function positiveAngleBetween(a : Vector, b : Vector, n : Vector) : Float{
         var nab = Vec.cross(a,b);
 
         var al = Vec.norm(a);
@@ -36,7 +36,7 @@ class Vec {
         return s > 0 ? w : -w;
     }
 
-    public static function signedAngleBetween(a : Array<Float>, b : Array<Float>, n : Array<Float>) : Float{
+    public static function signedAngleBetween(a : Vector, b : Vector, n : Vector) : Float {
         var nab = Vec.cross(a,b);
 
         var al = Vec.norm(a);
@@ -53,16 +53,16 @@ class Vec {
         return s > 0.0 ? w : 2 * Math.PI - w;
     }
 
-    public static function angleBetweenNormalized2d(a : Array<Float>, b : Array<Float>) : Float {
+    public static function angleBetweenNormalized2d(a : Vector, b : Vector) : Float {
         var perpDot = a[0] * b[1]-a[1] * b[0];
         return Math.atan2(perpDot, dot(a, b));
     }
 
-    public static inline function domain(a : Array<Float>) : Float {
+    public static inline function domain(a : Vector) : Float {
         return a.last() - a.first();
     }
 
-    public static function range(max : Int) : Array<Float> {
+    public static function range(max : Int) : Vector {
         var l = [];
         var f = 0.0;
         for ( i in 0...max ){
@@ -72,7 +72,7 @@ class Vec {
         return l;
     }
 
-    public static function span(min : Float, max : Float, step : Float) : Array<Float> {
+    public static function span(min : Float, max : Float, step : Float) : Vector {
         #if (!cs && !cpp && !java)
             if (step == null) return [];
         #end
@@ -91,15 +91,15 @@ class Vec {
         return l;
     }
 
-    public static function neg(arr : Array<Float>) : Array<Float> {
+    public static function neg(arr : Vector) : Vector {
         return arr.map(function(x){ return -x; });
     }
 
-    public static function min(arr : Array<Float>) : Float {
+    public static function min(arr : Vector) : Float {
         return arr.fold(function(x,a){ return Math.min(x,a); }, Math.POSITIVE_INFINITY);
     }
 
-    public static function max(arr : Array<Float>) : Float {
+    public static function max(arr : Vector) : Float {
         return arr.fold(function(x,a){ return Math.max(x,a); }, Math.NEGATIVE_INFINITY);
     }
 
@@ -107,39 +107,39 @@ class Vec {
         return arr.fold(function(x,a){ return a && x; }, true);
     }
 
-    public static function finite(arr : Array<Float>) : Array<Bool> {
+    public static function finite(arr : Vector) : Array<Bool> {
         return arr.map(function(x){ return Math.isFinite(x); });
     }
 
-    public static function onRay(origin : Point, dir : Vector, u : Float) : Array<Float> {
+    public static function onRay(origin : Point, dir : Vector, u : Float) : Vector {
         return Vec.add( origin, Vec.mul(u, dir) );
     }
 
-    public static function lerp(i : Float, u : Array<Float>, v : Array<Float>) : Array<Float>{
+    public static function lerp(i : Float, u : Vector, v : Vector) : Vector {
         return Vec.add( Vec.mul( i, u ), Vec.mul( 1.0 - i, v) );
     }
 
-    public static function normalized( arr : Array<Float> ){
+    public static function normalized( arr : Vector) {
         return div( arr, norm(arr) );
     }
 
-    public static function cross(u : Array<Float>, v : Array<Float>) : Array<Float>{
+    public static function cross(u : Vector, v : Vector) : Vector {
         return [u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];
     }
 
-    public static function dist(a : Array<Float>, b : Array<Float> ) : Float {
+    public static function dist(a : Vector, b : Vector) : Float {
         return norm(sub(a,b));
     }
 
-    public static function distSquared(a : Array<Float>, b : Array<Float> ) : Float {
+    public static function distSquared(a : Vector, b : Vector ) : Float {
         return normSquared(sub(a,b));
     }
 
-    public static function sum(a : Iterable<Float>) : Float {
+    public static function sum(a : Vector) : Float {
         return a.fold(function(x,a){ return a + x; }, 0);
     }
 
-    public static function addAll(a : Iterable<Array<Float>>) : Array<Float> {
+    public static function addAll(a : Iterable<Vector>) : Vector {
         var i = a.iterator();
         if (!i.hasNext()) return null;
 
@@ -148,43 +148,43 @@ class Vec {
         return a.fold(function(x,a){ return add(a,x); }, rep(f, 0.0));
     }
 
-    public static function addAllMutate(a : Array<Array<Float>>) {
+    public static function addAllMutate(a : Array<Vector>) {
         var f = a[0];
         for (i in 1...a.length)
             addMutate(f, a[i]);
     }
 
-    public static function addMulMutate(a : Array<Float>, s : Float, b : Array<Float>) {
+    public static function addMulMutate(a : Vector, s : Float, b : Vector) {
         for (i in 0...a.length)
             a[i] = a[i] + s * b[i];
     }
 
-    public static function subMulMutate(a : Array<Float>, s : Float, b : Array<Float>) {
+    public static function subMulMutate(a : Vector, s : Float, b : Vector) {
         for (i in 0...a.length)
             a[i] = a[i] - s * b[i];
     }
 
-    public static function addMutate(a : Array<Float>, b : Array<Float>) {
+    public static function addMutate(a : Vector, b : Vector) {
         for (i in 0...a.length)
             a[i] = a[i] + b[i];
     }
 
-    public static function subMutate(a : Array<Float>, b : Array<Float>) {
+    public static function subMutate(a : Vector, b : Vector) {
         for (i in 0...a.length)
             a[i] = a[i] - b[i];
     }
 
-    public static function mulMutate(a : Float, b : Array<Float>) {
+    public static function mulMutate(a : Float, b : Vector) {
         for (i in 0...b.length)
             b[i] = b[i] * a;
     }
 
-    public static function norm(a : Iterable<Float> ) : Float {
+    public static function norm(a : Vector ) : Float {
         var norm2 = normSquared(a);
         return norm2 != 0.0 ? Math.sqrt( norm2 ) : norm2;
     }
 
-    public static function normSquared(a : Iterable<Float> ) : Float {
+    public static function normSquared(a : Vector ) : Float {
         return a.fold(function(x,a){ return a + x * x; }, 0);
     }
 
@@ -192,19 +192,23 @@ class Vec {
         return [ for (i in 0...num) ele ];
     }
 
-    public static function zeros1d(rows : Int) : Array<Float> {
+    public static function fill(num : Int, ele : Float ) : Vector {
+        return [ for (i in 0...num) ele ];
+    }
+
+    public static function zeros1d(rows : Int) : Vector {
         return [ for (i in 0...rows) 0.0 ];
     }
 
-    public static function zeros2d(rows : Int, cols : Int) : Array<Array<Float>> {
+    public static function zeros2d(rows : Int, cols : Int) : Array<Vector> {
         return [ for (i in 0...rows) zeros1d(cols) ];
     }
 
-    public static function zeros3d(rows : Int, cols : Int, depth : Int) : Array<Array<Array<Float>>> {
+    public static function zeros3d(rows : Int, cols : Int, depth : Int) : Array<Array<Vector>> {
         return [ for (i in 0...rows) zeros2d(cols, depth) ];
     }
 
-    public static function dot(a : Array<Float>, b : Array<Float>) : Float {
+    public static function dot(a : Vector, b : Vector) : Float {
         var sum : Float = 0;
         for (i in 0...a.length){
             sum += a[i] * b[i];
@@ -212,23 +216,23 @@ class Vec {
         return sum;
     }
 
-    public static function add(a : Array<Float>, b : Array<Float>) : Array<Float>{
+    public static function add(a : Vector, b : Vector) : Vector {
         return [ for (i in 0...a.length) a[i] + b[i] ];
     }
 
-    public static function mul(a : Float, b : Array<Float>) : Array<Float>{
+    public static function mul(a : Float, b : Vector) : Vector {
         return [ for (i in 0...b.length) a * b[i] ];
     }
 
-    public static function div(a : Array<Float>, b : Float ) : Array<Float>{
+    public static function div(a : Vector, b : Float ) : Vector {
         return [ for (i in 0...a.length) a[i] / b ];
     }
 
-    public static function sub(a : Array<Float>, b : Array<Float>) : Array<Float>{
+    public static function sub(a : Vector, b : Vector) : Vector {
         return [ for (i in 0...a.length) a[i] - b[i] ];
     }
 
-    public static function isZero( vec : Array<Float> ){
+    public static function isZero( vec : Vector){
 
         for (i in 0...vec.length){
             if (Math.abs( vec[i] ) > verb.core.Constants.TOLERANCE ) return false;
@@ -237,7 +241,7 @@ class Vec {
         return true;
     }
 
-    public static function sortedSetUnion( a : Array<Float>, b : Array<Float>) : Array<Float> {
+    public static function sortedSetUnion( a : Vector, b : Vector) : Vector {
 
         var merged = [];
 
@@ -281,7 +285,7 @@ class Vec {
     }
 
     //a is superset, hence it is always longer or equal
-    public static function sortedSetSub( a : Array<Float>, b : Array<Float>) : Array<Float> {
+    public static function sortedSetSub( a : Vector, b : Vector) : Vector {
 
         var result = [];
 

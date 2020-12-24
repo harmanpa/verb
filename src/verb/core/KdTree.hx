@@ -13,7 +13,7 @@ import verb.core.Data;
 //@author Ubilabs http://ubilabs.net, 2012
 //@license MIT License <http://www.opensource.org/licenses/mit-license.php>
 
-@:expose("core.KdTree")
+@:generic
 class KdTree<T> {
 
     private var points : Array<KdPoint<T>>;
@@ -58,10 +58,10 @@ class KdTree<T> {
         return node;
     }
 
-    public function nearest(point : Point, maxNodes : Int, maxDistance : Float ) : Array<Pair<KdPoint<T>, Float>> {
+    public function nearest(point : Point, maxNodes : Int, maxDistance : Float ) : Array<HeapElement<KdPoint<T>>> {
 
-        var bestNodes = new BinaryHeap<KdNode<T>>(
-            function (e : Pair<KdNode<T>, Float>) { return -e.item1; }
+        var bestNodes = new BinaryHeap<KdNode<T>> (
+            function (e : HeapElement<KdNode<T>>) { return -e.value; }
         );
 
         function nearestSearch(node : KdNode<T>) {
@@ -75,7 +75,7 @@ class KdTree<T> {
                 i;
 
             function saveNode(node : KdNode<T>, distance : Float) : Void {
-                bestNodes.push(new Pair(node, distance));
+                bestNodes.push(new HeapElement<KdNode<T>>(node, distance));
                 if (bestNodes.size() > maxNodes) {
                     bestNodes.pop();
                 }
@@ -92,7 +92,7 @@ class KdTree<T> {
             linearDistance = distanceFunction( linearPoint, node.kdPoint.point );
 
             if (node.right == null && node.left == null) {
-                if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek().item1) {
+                if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek().value) {
                     saveNode(node, ownDistance);
                 }
                 return;
@@ -112,11 +112,11 @@ class KdTree<T> {
 
             nearestSearch( bestChild );
 
-            if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek().item1) {
+            if (bestNodes.size() < maxNodes || ownDistance < bestNodes.peek().value) {
                 saveNode(node, ownDistance);
             }
 
-            if (bestNodes.size() < maxNodes || Math.abs(linearDistance) < bestNodes.peek().item1) {
+            if (bestNodes.size() < maxNodes || Math.abs(linearDistance) < bestNodes.peek().value) {
                 if (bestChild == node.left) {
                     otherChild = node.right;
                 } else {
@@ -129,44 +129,47 @@ class KdTree<T> {
         }
 
         for (i in 0...maxNodes){
-            bestNodes.push(new Pair<KdNode<T>, Float>(null, maxDistance));
+            bestNodes.push(new HeapElement<KdNode<T>>(null, maxDistance));
         }
 
         nearestSearch( this.root );
 
-        var result = [];
+        var result: Array<HeapElement<KdPoint<T>>> = new Array<HeapElement<KdPoint<T>>>();
 
         for (i in 0...maxNodes){
-            if (bestNodes.content[i].item0 != null) {
-                result.push(new Pair<KdPoint<T>, Float>(bestNodes.content[i].item0.kdPoint, bestNodes.content[i].item1));
+            if (bestNodes.content[i].obj != null) {
+                result.push(new HeapElement<KdPoint<T>>(bestNodes.content[i].obj.kdPoint, bestNodes.content[i].value));
             }
         }
 
         return result;
     }
+
 }
+
+
 
 //Binary heap implementation from:
 //http://eloquentjavascript.net/appendix2.html
-
+@:generic
 class BinaryHeap<T> {
 
-    public var content : Array<Pair<T, Float>>;
-    private var scoreFunction : Pair<T, Float> -> Float;
+    public var content : Array<HeapElement<T>>;
+    private var scoreFunction : HeapElement<T> -> Float;
 
-    public function new(scoreFunction){
+    public function new(scoreFunction: HeapElement<T> -> Float){
         this.content = [];
         this.scoreFunction = scoreFunction;
     }
 
-    public function push(element : Pair<T, Float>) : Void {
+    public function push(element : HeapElement<T>) : Void {
         //Add the new element to the end of the array.
         this.content.push(element);
         //Allow it to bubble up.
         this.bubbleUp(this.content.length - 1);
     }
 
-    public function pop() : Pair<T, Float> {
+    public function pop() : HeapElement<T> {
         //Store the first element so we can return it later.
         var result = this.content[0];
         //Get the element at the end of the array.
@@ -180,11 +183,11 @@ class BinaryHeap<T> {
         return result;
     }
 
-    public function peek() : Pair<T, Float> {
+    public function peek() : HeapElement<T> {
         return this.content[0];
     }
 
-    public function remove(node : Pair<T, Float>) : Void {
+    public function remove(node : HeapElement<T>) : Void {
         var len = this.content.length;
         //To remove a value, we must search through the array to find
         //it.
@@ -279,8 +282,19 @@ class BinaryHeap<T> {
     }
 }
 
+@:generic
+class HeapElement<T> {
+   public var obj: T;
+   public var value: Float;
+
+   public function new(obj, value){
+           this.obj = obj;
+           this.value = value;
+       }
+}
+
 // A point in a KdTree
-@:expose("core.KdPoint")
+@:generic
 class KdPoint<T> {
 
     // The point
@@ -296,7 +310,7 @@ class KdPoint<T> {
 }
 
 // A node in a KdTree
-@:expose("core.KdNode")
+@:generic
 class KdNode<T> {
 
     // The point itself

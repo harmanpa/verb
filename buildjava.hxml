@@ -1,0 +1,6 @@
+-main verb.Verb
+-cp src
+-java-lib lib/commons-math3-3.6.1.jar
+-java build/java
+-dce std
+-D dll

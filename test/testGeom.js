@@ -1,10 +1,6 @@
 var should = require('should')
 	, verb = require('../build/js/verb.js');
 
-// necessary for multi-threading
-verb.exe.WorkerPool.basePath = process.cwd() + "/build/js/";
-
-console.log(verb.exe.WorkerPool.basePath);
 
 // some testing utilities
 function vecShouldBe( expected, test, tol ){
@@ -60,12 +56,6 @@ describe("verb.geom.NurbsCurve.lengthAtParam",function(){
 		res.should.be.approximately(4, 1e-3 )
 	});
 
-	it('is correct for basic case async', function(done){
-		crv.lengthAtParamAsync( 1 ).then(function(res){
-			res.should.be.approximately(4, 1e-3 );
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsCurve.derivatives",function(){
@@ -84,13 +74,6 @@ describe("verb.geom.NurbsCurve.derivatives",function(){
 		vecShouldBe( [3,0,0], p[1], 1e-3 );
 	});
 
-	it('returns the derivatives for a straight curve async', function(done){
-		crv.derivativesAsync( 0.5 ).then(function(p){
-			vecShouldBe( [2,0,0], p[0], 1e-3 );
-			vecShouldBe( [3,0,0], p[1], 1e-3 );
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsCurve.tangent",function(){
@@ -108,12 +91,6 @@ describe("verb.geom.NurbsCurve.tangent",function(){
 		vecShouldBe( [3,0,0], p, 1e-3 );
 	});
 
-	it('can get the tangent for a straight curve async', function(done){
-		crv.tangentAsync( 0.5 ).then(function(p){
-			vecShouldBe( [3,0,0], p, 1e-3 );
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsCurve.paramAtLength",function(){
@@ -132,13 +109,6 @@ describe("verb.geom.NurbsCurve.paramAtLength",function(){
 		vecShouldBe( [2,0,0], p, 1e-3 );
 	});
 
-	it('can get closest point to straight curve async', function(done){
-		crv.paramAtLengthAsync( 2 ).then(function(res){
-			var p = crv.point( res );
-			vecShouldBe( [2,0,0], p, 1e-3 );
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsCurve.divideByEqualArcLength",function(){
@@ -171,28 +141,6 @@ describe("verb.geom.NurbsCurve.divideByEqualArcLength",function(){
 
 	});
 
-	it('can divide straight curve async', function(done){
-
-		crv.divideByEqualArcLengthAsync( divs ).then(function(res){
-
-			var tol = 1e-3;
-
-			var s = 0;
-			res.forEach(function(u){
-
-				var pt = crv.point( u.u );
-				u.len.should.be.approximately( s, tol );
-
-				pt[0].should.be.approximately( s, tol );
-				s += d;
-
-			});
-
-			done();
-
-		})
-
-	});
 
 });
 
@@ -225,24 +173,6 @@ describe("verb.geom.NurbsCurve.divideByArcLength",function(){
 
 	});
 
-	it('can divide straight curve async', function(){
-
-		crv.divideByArcLengthAsync( d ).then(function(res){
-
-			var s = 0;
-			res.forEach(function(u){
-
-				var pt = crv.point( u.u );
-				u.len.should.be.approximately( s, tol );
-
-				pt[0].should.be.approximately( s, tol );
-				s += d;
-
-			});
-
-		})
-
-	});
 
 });
 
@@ -272,18 +202,6 @@ describe("verb.geom.NurbsCurve.closestParam",function(){
 		var p = crv.point( res );
 
 		vecShouldBe( [1,0,0], p, 1e-3 );
-
-	});
-
-	it('can get closest point to straight curve async', function(done){
-
-		var pt = [1,1,0];
-		crv.closestParamAsync(pt).then(function(res){
-			var p = crv.point( res );
-
-			vecShouldBe( [1,0,0], p, 1e-3 );
-			done();
-		});
 
 	});
 
@@ -318,12 +236,6 @@ describe("verb.geom.NurbsCurve.split",function(){
 
 	var crv = verb.geom.NurbsCurve.byKnotsControlPointsWeights( degree, knots, controlPoints, weights );
 
-	function cubicSplitAsync(u, done){
-
-		var res = crv.splitAsync(0.5);
-		check(u, res);
-
-	}
 
 	function check(u, res){
 
@@ -347,12 +259,6 @@ describe("verb.geom.NurbsCurve.split",function(){
 
 	});
 
-	it('returns expected results when splitting curve async', function(done){
-		crv.splitAsync( 2.5 ).then(function(res){
-			check(2.5, res);
-			done();
-		});
-	});
 
 });
 
@@ -375,12 +281,6 @@ describe("verb.geom.NurbsCurve.transform",function(){
 		ta.point( 0.5 ).should.be.eql([2 + 5, 2, -1 ]);
 	});
 
-	it('works for basic case async', function(done){
-		crv.transformAsync( t ).then(function(ta){
-			ta.point( 0.5 ).should.be.eql([2 + 5, 2, -1 ]);
-			done();
-		});
-	});
 });
 
 describe("verb.geom.Arc.constructor",function(){
@@ -427,21 +327,6 @@ describe("verb.geom.Arc.point",function(){
 		p3[2].should.be.approximately( 1, 0.001 );
 	});
 
-	it('creates the expected result when given a callback', function(done){
-
-		var arc = new verb.geom.Arc([0,0,1], [1,0,0], [0,1,0], 1, 0, Math.PI/ 2 );
-
-		arc.pointAsync(0.5).then(function(res){
-
-			res.should.be.instanceof(Array).and.have.lengthOf(3);
-			res[0].should.be.approximately( Math.sqrt(2)/2, 0.001 );
-			res[1].should.be.approximately( Math.sqrt(2)/2, 0.001 );
-			res[2].should.be.approximately( 1, 0.001 );
-
-			done();
-		});
-
-	});
 
 });
 
@@ -954,14 +839,6 @@ describe("verb.geom.NurbsSurface.point",function(){
 
 	});
 
-	it('is correct for basic case async', function(done){
-
-		surface.pointAsync(0.5,0.5).then(function(x){
-			vecShouldBe( [15, -15, 0], x );
-			done();
-		});
-
-	});
 
 });
 
@@ -985,14 +862,6 @@ describe("verb.geom.NurbsSurface.normal",function(){
 		vecShouldBe( [0, 0, 900], surface.normal(0.5,0.5) );
 	});
 
-	it('is correct for basic case async', function(done){
-
-		surface.normalAsync(0.5,0.5).then(function(x){
-			vecShouldBe( [0, 0, 900], x );
-			done();
-		});
-
-	});
 
 });
 
@@ -1020,16 +889,6 @@ describe("verb.geom.NurbsSurface.derivatives",function(){
 		vecShouldBe( [30, 0, 0], d[0][1] );
 	});
 
-	it('is correct for basic case async', function(done){
-		surface.derivativesAsync( 0.5, 0.5, 1 ).then(function(d){
-
-			vecShouldBe( [15, -15, 0], d[0][0] );
-			vecShouldBe( [0, -30, 0], d[1][0] );
-			vecShouldBe( [30, 0, 0], d[0][1] );
-
-			done();
-		});
-	});
 
 });
 
@@ -1054,12 +913,6 @@ describe("verb.geom.NurbsSurface.closestParam",function(){
 		vecShouldBe( [0.5, 0.5], d );
 	});
 
-	it('is correct for basic case async', function(done){
-		surface.closestParamAsync(  [15, -15, 1] ).then(function(d){
-			vecShouldBe( [0.5, 0.5], d );
-			done();
-		});
-	});
 
 	it('is correct for basic case of degree 1 in both directions', function() {
 		var degreeU = 1
@@ -1113,12 +966,6 @@ describe("verb.geom.NurbsSurface.closestPoint",function(){
 		vecShouldBe( [15, -15, 0], d );
 	});
 
-	it('is correct for basic case async', function(done){
-		surface.closestPointAsync(  [15, -15, 1] ).then(function(d){
-			vecShouldBe( [15, -15, 0], d );
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsSurface.split",function(){
@@ -1169,24 +1016,6 @@ describe("verb.geom.NurbsSurface.split",function(){
 		d[1].domainU().max.should.be.equal(1.0);
 	});
 
-	it('is correct for basic case async', function(done){
-		surface.splitAsync( 0.5, true ).then(function(d){
-
-			d[0].domainV().min.should.be.equal(0);
-			d[0].domainV().max.should.be.equal(0.5);
-
-			d[0].domainU().min.should.be.equal(0);
-			d[0].domainU().max.should.be.equal(1.0);
-
-			d[1].domainV().min.should.be.equal(0.5);
-			d[1].domainV().max.should.be.equal(1.0);
-
-			d[1].domainU().min.should.be.equal(0);
-			d[1].domainU().max.should.be.equal(1.0);
-
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsSurface.tessellate",function(){
@@ -1214,19 +1043,6 @@ describe("verb.geom.NurbsSurface.tessellate",function(){
 		d.uvs.length.should.be.greaterThan( 2 );
 
 	});
-
-//	it('is correct for basic case async', function(done){
-//		surface.tessellateAsync( 0.5, true ).then(function(d){
-//			console.log("Hello");
-//
-//			d.faces.length.should.be.greaterThan( 2 );
-//			d.normals.length.should.be.greaterThan( 2 );
-//			d.points.length.should.be.greaterThan( 2 );
-//			d.uvs.length.should.be.greaterThan( 2 );
-//
-//			done();
-//		});
-//	});
 });
 
 describe("verb.geom.NurbsSurface.transform",function(){
@@ -1257,14 +1073,6 @@ describe("verb.geom.NurbsSurface.transform",function(){
 		ta.point(0.5,0.5).should.be.eql( [ 15 + 5, -15 + 2, 0 - 1] );
 	});
 
-	it('is correct for basic case async', function(done){
-		surface.transformAsync( t ).then(function(ta){
-
-			ta.point(0.5,0.5).should.be.eql( [ 15 + 5, -15 + 2, 0 - 1] );
-
-			done();
-		});
-	});
 });
 
 describe("verb.geom.NurbsCurve.byPoints",function(){
@@ -1939,18 +1747,6 @@ describe("verb.geom.Intersect.curves",function(){
 
 	});
 
-	it('gives valid result for 2 planar degree 2 beziers', function(done){
-
-		verb.geom.Intersect.curvesAsync( curve1, curve2, verb.core.Constants.TOLERANCE )
-			.then(function(res){
-
-				res.length.should.be.equal(1);
-
-		        verb.core.Vec.dist( res[0].point0, res[0].point1 ).should.be.lessThan( verb.core.Constants.TOLERANCE );
-
-				done();
-			});
-	});
 
 });
 
@@ -1981,18 +1777,6 @@ describe("verb.geom.Intersect.curveAndSurface",function(){
 		res[0].uv[1].should.be.approximately( 0.5, 1e-3 );
 	});
 
-	it('gives valid result for planar surface and degree 2 bezier async', function(done){
-		verb.geom.Intersect.curveAndSurfaceAsync( curve, surface, verb.core.Constants.TOLERANCE  )
-			.then(function(res){
-
-				res.length.should.be.equal( 1 );
-				res[0].u.should.be.approximately( 0.5, 1e-3 );
-				res[0].uv[0].should.be.approximately( 0.265, 1e-3 );
-				res[0].uv[1].should.be.approximately( 0.5, 1e-3 );
-
-				done();
-			});
-	});
 });
 
 describe("verb.geom.NurbsCurve.reverse",function(){
@@ -2119,23 +1903,6 @@ describe("verb.geom.NurbsSurface.isocurve",function(){
 
 	});
 
-	it('provides isocurves at expected location in u direction async', function(done){
-
-		var i = 0.5;
-		bezier.isocurveAsync( i, false ).then(function(res){
-
-			var cpts = res.controlPoints();
-
-			var pt0 = bezier.point( i, 0.0 );
-			var pt1 = bezier.point( i, 1.0 );
-
-			vecShouldBe( pt0, cpts[0] );
-			vecShouldBe( pt1, cpts[cpts.length-1] );
-
-			done();
-
-		});
-	});
 });
 
 

@@ -67,7 +67,7 @@ class Analyze {
 
     public static function isRationalSurfaceClosed(surface : NurbsSurfaceData, uDir : Bool = true ) : Bool {
 
-        var cpts = if (uDir) surface.controlPoints else surface.controlPoints.transpose();
+        var cpts = if (uDir) surface.controlPoints else surface.controlPoints.transposeN();
 
         for (i in 0...cpts[0].length){
             var test = Vec.dist( cpts.first()[i], cpts.last()[i] ) < Constants.EPSILON;
@@ -183,7 +183,7 @@ class Analyze {
             return Eval.rationalSurfaceDerivatives( surface, uv[0], uv[1], 2 );
         }
 
-        function n(uv : UV, e : Array<Array<Point>>, r : Array<Float>) : UV {
+        function n(uv : UV, e : Array<Array<Point>>, r : Vector) : UV {
 
             //f = Su(u,v) * r = 0
             //g = Sv(u,v) * r = 0
@@ -207,7 +207,7 @@ class Analyze {
             var J10 = Vec.dot( Su, Sv ) + Vec.dot( Svu, r );
             var J11 = Vec.dot( Sv, Sv ) + Vec.dot( Svv, r );
 
-            var J = [ [ J00, J01 ], [ J10, J11 ] ];
+            var J: Matrix = [ [ J00, J01 ], [ J10, J11 ] ];
 
             //    d =   [ u* - u, v* - v ]
             //		k = - [ f(u,v), g(u,v) ]
@@ -389,7 +389,7 @@ class Analyze {
             return Eval.rationalCurveDerivatives( curve, u, 2 );
         }
 
-        function n(u : Float, e: Array<Point>, d : Array<Float>) : Float {
+        function n(u : Float, e: Array<Point>, d : Vector) : Float {
             //   C'(u) * ( C(u) - P ) = 0 = f(u)
             var f = Vec.dot( e[1], d );
 
@@ -468,7 +468,7 @@ class Analyze {
                                                          len : Float,
                                                          tol : Float = 1e-3,
                                                          beziers : Array<NurbsCurveData> = null,
-                                                         bezierLengths : Array<Float> = null) : Float {
+                                                         bezierLengths : Vector = null) : Float {
 
         if (len < Constants.EPSILON) return curve.knots[0];
 
@@ -476,7 +476,7 @@ class Analyze {
         , i = 0
         , cc = crvs[i]
         , cl = -Constants.EPSILON
-        , bezier_lengths = if (bezierLengths != null) bezierLengths else [];
+        , bezier_lengths: Vector = if (bezierLengths != null) bezierLengths else [];
 
         //iterate through the curves consuming the bezier's, summing their length along the way
         while (cl < len && i < crvs.length){
@@ -607,7 +607,7 @@ class Analyze {
     }
 
     //Legendre-Gauss abscissae (xi values, defined at i=n as the roots of the nth order Legendre polynomial Pn(x))
-    static var Tvalues : Array<Array<Float>> = [
+    static var Tvalues : Array<Vector> = [
         [], [],
         [  -0.5773502691896257645091487805019574556476,0.5773502691896257645091487805019574556476],
         [0,-0.7745966692414833770358530799564799221665,0.7745966692414833770358530799564799221665],
@@ -635,7 +635,7 @@ class Analyze {
     ];
 
     //Legendre-Gauss weights
-   static var Cvalues : Array<Array<Float>> = [
+   static var Cvalues : Array<Vector> = [
         [],[],
         [1.0,1.0],
         [0.8888888888888888888888888888888888888888,0.5555555555555555555555555555555555555555,0.5555555555555555555555555555555555555555],

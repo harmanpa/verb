@@ -131,9 +131,11 @@ class ArrayExtensions {
 
     public static function unique<T>( arr : Array<T>, comp : T -> T -> Bool ){
 
-        if (arr.length == 0) return [];
+        var uniques: Array<T> = [];
 
-        var uniques = [ arr.pop() ];
+        if (arr.length == 0) return uniques;
+
+        uniques.push(arr.pop());
 
         while (arr.length > 0){
 

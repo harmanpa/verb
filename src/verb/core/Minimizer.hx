@@ -20,8 +20,12 @@ class Minimizer {
         if(Math.isNaN(f0)) throw 'uncmin: f(x0) is a NaN!';
 
         tol = Math.max(tol, Constants.EPSILON);
-        var step,g0,g1,H1 = Mat.identity(n);
-        var it=0,i,s =[],x1,y,Hy,Hs,ys,i0,t,nstep,t1,t2;
+        var step: Vector;
+        var g0;
+        var g1;
+        var H1 = Mat.identity(n);
+        var it=0,i,x1,y,Hy,Hs,ys,i0,t,nstep,t1,t2;
+        var s: Vector = [];
         var msg = "";
         g0 = gradient( x0 );
 
@@ -118,8 +122,8 @@ class Minimizer {
 
     private static function tensor(x : Vector, y : Vector) : Matrix {
 
-        var m = x.length, n = y.length, A = [], Ai, xi;
-
+        var m = x.length, n = y.length, Ai, xi;
+        var A: Matrix = new Matrix();
         var i = m-1;
         while (i >= 0){
             Ai = [];

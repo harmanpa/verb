@@ -87,7 +87,12 @@ class Mat {
 
     // Transpose a matrix
 
-    public static function transpose<T>(a : Array<Array<T>>) : Array<Array<T>> {
+    public static function transpose(a : Matrix) : Matrix {
+        if (a.length == 0) return [];
+        return [ for (i in 0...a[0].length) [for (j in 0...a.length) a[j][i] ]  ];
+    }
+
+    public static function transposeN<T>(a : Array<Array<T>>) : Array<Array<T>> {
         if (a.length == 0) return [];
         return [ for (i in 0...a[0].length) [for (j in 0...a.length) a[j][i] ]  ];
     }

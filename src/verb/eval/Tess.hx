@@ -66,7 +66,8 @@ class Tess {
 			u = start + span * i;
 
 			if ( includeU ){
-				p.push( [u].concat( Eval.rationalCurvePoint(curve, u) ) );
+			    var uVec: Vector = [u];
+				p.push( uVec.concat( Eval.rationalCurvePoint(curve, u) ) );
 			} else {
 				p.push( Eval.rationalCurvePoint(curve, u) );
 			}
@@ -89,7 +90,7 @@ class Tess {
     //
     //* an array of dim + 1 length where the first element is the param where it was sampled and the remaining the pt
 
-	public static function rationalCurveAdaptiveSample( curve : NurbsCurveData, tol : Float = 1e-6, includeU : Bool = false ) : Array<Point> {
+	public static function rationalCurveAdaptiveSample( curve : NurbsCurveData, tol : Float = 1e-6, includeU : Bool = false ) : Array<Vector> {
 
 		//if degree is 1, just return the dehomogenized control points
 		if (curve.degree == 1){
@@ -118,7 +119,7 @@ class Tess {
     //
     //* an array of dim + 1 length where the first element is the param where it was sampled and the remaining the pt
 
-	public static function rationalCurveAdaptiveSampleRange( curve : NurbsCurveData, start, end, tol, includeU ) : Array<Point>{
+	public static function rationalCurveAdaptiveSampleRange( curve : NurbsCurveData, start, end, tol, includeU ) : Array<Vector> {
 
 		//sample curve at three pts
 		var p1 = Eval.rationalCurvePoint(curve, start),
@@ -182,9 +183,9 @@ class Tess {
 		var span_u = u_span / divs_u,
 		span_v = v_span / divs_v;
 
-		var points = [];
-		var uvs = [];
-		var normals = [];
+		var points: Array<Point> = [];
+		var uvs: Array<UV> = [];
+		var normals: Array<Vector> = [];
 
 		for (i in 0...divs_u+1){
 			for (j in 0...divs_v+1){
@@ -316,17 +317,17 @@ class Tess {
 		if (i == 0) return null;
 		return divs[ index - divsU ];
 	}
-	
+
 	private static function south(index, i, j, divsU, divsV, divs){
 		if (i == divsV - 1) return null;
 		return divs[ index + divsU ];
 	}
-	
+
 	private static function east(index, i, j, divsU, divsV, divs){
 		if (j == divsU - 1) return null;
 		return divs[ index + 1 ];
 	}
-	
+
 	private static function west(index, i, j, divsU, divsV, divs){
 		if (j == 0) return null;
 		return divs[ index - 1 ];
@@ -527,8 +528,8 @@ class AdaptiveRefinementNode {
 
 //range clipping functions
         var rangeFuncMap = [
-        function(c){ return c.uv[0] > that.corners[0].uv[0] + e && c.uv[0] < that.corners[2].uv[0] - e;  },
-        function(c){ return c.uv[1] > that.corners[0].uv[1] + e && c.uv[1] < that.corners[2].uv[1] - e;  }
+        function(c: SurfacePoint){ return c.uv[0] > that.corners[0].uv[0] + e && c.uv[0] < that.corners[2].uv[0] - e;  },
+        function(c: SurfacePoint){ return c.uv[1] > that.corners[0].uv[1] + e && c.uv[1] < that.corners[2].uv[1] - e;  }
         ];
 
 //clip the range of uvs to match this one
