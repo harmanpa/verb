@@ -17,6 +17,7 @@ Using haxe, verb compiles for:
 * C++
 * Python
 * PHP
+* Java
 
 ### Documentation
 
