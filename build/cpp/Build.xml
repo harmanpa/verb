@@ -1,0 +1,732 @@
+<xml>
+<set name="HXCPP_API_LEVEL" value="400" />
+<files id="haxe">
+<compilerflag value="-Iinclude"/>
+  <file name="src/verb/geom/SweptSurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+   <depend name="include/verb/geom/SweptSurface.h"/>
+  </file>
+  <file name="src/verb/geom/SphericalSurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+   <depend name="include/verb/geom/SphericalSurface.h"/>
+  </file>
+  <file name="src/verb/geom/RevolvedSurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+   <depend name="include/verb/geom/RevolvedSurface.h"/>
+  </file>
+  <file name="src/verb/geom/Line.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/Line.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/Intersect.cpp" >
+   <depend name="include/verb/core/CurveCurveIntersection.h"/>
+   <depend name="include/verb/core/CurveSurfaceIntersection.h"/>
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+   <depend name="include/verb/eval/Intersect.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/Intersect.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/ExtrudedSurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/ExtrudedSurface.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+  </file>
+  <file name="src/verb/geom/Ellipse.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/geom/Ellipse.h"/>
+   <depend name="include/verb/geom/EllipseArc.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/EllipseArc.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/EllipseArc.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/CylindricalSurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/CylindricalSurface.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+  </file>
+  <file name="src/verb/geom/ConicalSurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/ConicalSurface.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+  </file>
+  <file name="src/verb/geom/NurbsSurface.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementOptions.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/eval/Check.h"/>
+   <depend name="include/verb/eval/Divide.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/eval/Modify.h"/>
+   <depend name="include/verb/eval/Tess.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+   <depend name="include/verb/geom/NurbsSurface.h"/>
+  </file>
+  <file name="src/verb/geom/ISurface.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/geom/ISurface.h"/>
+  </file>
+  <file name="src/verb/geom/Circle.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/geom/Arc.h"/>
+   <depend name="include/verb/geom/Circle.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/BezierCurve.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/BezierCurve.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/Arc.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/geom/Arc.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/NurbsCurve.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/eval/Check.h"/>
+   <depend name="include/verb/eval/CurveLengthSample.h"/>
+   <depend name="include/verb/eval/Divide.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/eval/Modify.h"/>
+   <depend name="include/verb/eval/Tess.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+   <depend name="include/verb/geom/NurbsCurve.h"/>
+  </file>
+  <file name="src/verb/geom/ICurve.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/geom/ICurve.h"/>
+  </file>
+  <file name="src/verb/eval/AdaptiveRefinementNode.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/SurfacePoint.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementNode.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementOptions.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+  </file>
+  <file name="src/verb/eval/AdaptiveRefinementOptions.cpp" >
+   <depend name="include/verb/eval/AdaptiveRefinementOptions.h"/>
+  </file>
+  <file name="src/verb/eval/Tess.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/SurfacePoint.h"/>
+   <depend name="include/verb/core/Trig.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementNode.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementOptions.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/Tess.h"/>
+  </file>
+  <file name="src/verb/eval/Modify.cpp" >
+   <depend name="include/Lambda.h"/>
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Binomial.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/Mat.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/KnotMultiplicity.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/eval/Modify.h"/>
+  </file>
+  <file name="src/verb/eval/Make.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/CurveCurveIntersection.h"/>
+   <depend name="include/verb/core/Mat.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Trig.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/Intersect.h"/>
+   <depend name="include/verb/eval/KnotMultiplicity.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/eval/Modify.h"/>
+  </file>
+  <file name="src/verb/eval/Intersect.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/CurveCurveIntersection.h"/>
+   <depend name="include/verb/core/CurveSurfaceIntersection.h"/>
+   <depend name="include/verb/core/CurveTriPoint.h"/>
+   <depend name="include/verb/core/HeapElement_verb_core_KdPoint_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/KdPoint_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdTree_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/LazyCurveBoundingBoxTree.h"/>
+   <depend name="include/verb/core/LazyMeshBoundingBoxTree.h"/>
+   <depend name="include/verb/core/LazyPolylineBoundingBoxTree.h"/>
+   <depend name="include/verb/core/LazySurfaceBoundingBoxTree.h"/>
+   <depend name="include/verb/core/Mesh.h"/>
+   <depend name="include/verb/core/MeshBoundingBoxTree.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/MinimizationResult.h"/>
+   <depend name="include/verb/core/Minimizer.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/PolylineData.h"/>
+   <depend name="include/verb/core/PolylineMeshIntersection.h"/>
+   <depend name="include/verb/core/Ray.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/SurfaceSurfaceIntersectionPoint.h"/>
+   <depend name="include/verb/core/TriSegmentIntersection.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementOptions.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+   <depend name="include/verb/eval/Intersect.h"/>
+   <depend name="include/verb/eval/Make.h"/>
+   <depend name="include/verb/eval/Tess.h"/>
+  </file>
+  <file name="src/verb/eval/Eval.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Binomial.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/core/VolumeData.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+  </file>
+  <file name="src/verb/eval/CurveLengthSample.cpp" >
+   <depend name="include/verb/eval/CurveLengthSample.h"/>
+  </file>
+  <file name="src/verb/eval/Divide.cpp" >
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Mat.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/eval/CurveLengthSample.h"/>
+   <depend name="include/verb/eval/Divide.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/Modify.h"/>
+  </file>
+  <file name="src/verb/eval/Check.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Check.h"/>
+  </file>
+  <file name="src/verb/eval/KnotMultiplicity.cpp" >
+   <depend name="include/verb/eval/KnotMultiplicity.h"/>
+  </file>
+  <file name="src/verb/eval/Analyze.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Mat.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Trig.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/eval/AdaptiveRefinementOptions.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/KnotMultiplicity.h"/>
+   <depend name="include/verb/eval/Modify.h"/>
+   <depend name="include/verb/eval/Tess.h"/>
+  </file>
+  <file name="src/verb/core/Vec.cpp" >
+   <depend name="include/Lambda.h"/>
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+  </file>
+  <file name="src/verb/core/Trig.cpp" >
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Plane.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Trig.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+  </file>
+  <file name="src/verb/core/Deserializer.cpp" >
+   <depend name="include/haxe/Unserializer.h"/>
+   <depend name="include/verb/core/Deserializer.h"/>
+  </file>
+  <file name="src/verb/core/ISerializable.cpp" >
+   <depend name="include/verb/core/ISerializable.h"/>
+  </file>
+  <file name="src/verb/core/MinimizationResult.cpp" >
+   <depend name="include/verb/core/MinimizationResult.h"/>
+  </file>
+  <file name="src/verb/core/Minimizer.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Mat.h"/>
+   <depend name="include/verb/core/MinimizationResult.h"/>
+   <depend name="include/verb/core/Minimizer.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+  </file>
+  <file name="src/verb/core/MeshBoundingBoxTree.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/Mesh.h"/>
+   <depend name="include/verb/core/MeshBoundingBoxTree.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+  </file>
+  <file name="src/verb/core/Mesh.cpp" >
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/Mesh.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+  </file>
+  <file name="src/verb/core/_Mat/LUDecomp.cpp" >
+   <depend name="include/verb/core/_Mat/LUDecomp.h"/>
+  </file>
+  <file name="src/verb/core/Mat.cpp" >
+   <depend name="include/verb/core/Mat.h"/>
+   <depend name="include/verb/core/Vec.h"/>
+   <depend name="include/verb/core/_Mat/LUDecomp.h"/>
+  </file>
+  <file name="src/verb/core/LazySurfaceBoundingBoxTree.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/LazySurfaceBoundingBoxTree.h"/>
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Divide.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+  </file>
+  <file name="src/verb/core/LazyPolylineBoundingBoxTree.cpp" >
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/Interval.h"/>
+   <depend name="include/verb/core/LazyPolylineBoundingBoxTree.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/PolylineData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+  </file>
+  <file name="src/verb/core/LazyMeshBoundingBoxTree.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/LazyMeshBoundingBoxTree.h"/>
+   <depend name="include/verb/core/Mesh.h"/>
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+  </file>
+  <file name="src/verb/core/LazyCurveBoundingBoxTree.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/LazyCurveBoundingBoxTree.h"/>
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/eval/Divide.h"/>
+   <depend name="include/verb/eval/Eval.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+  </file>
+  <file name="src/verb/eval/IBoundingBoxTree.cpp" >
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/Pair.h"/>
+   <depend name="include/verb/eval/IBoundingBoxTree.h"/>
+  </file>
+  <file name="src/verb/core/KdTree_verb_core_MeshIntersectionPoint.cpp" >
+   <depend name="include/verb/core/BinaryHeap_verb_core_KdNode_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/HeapElement_verb_core_KdNode_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/HeapElement_verb_core_KdPoint_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdNode_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdPoint_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdTree_verb_core_MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/KdNode.cpp" >
+   <depend name="include/verb/core/KdNode.h"/>
+   <depend name="include/verb/core/KdPoint.h"/>
+  </file>
+  <file name="src/verb/core/KdPoint.cpp" >
+   <depend name="include/verb/core/KdPoint.h"/>
+  </file>
+  <file name="src/verb/core/HeapElement.cpp" >
+   <depend name="include/verb/core/HeapElement.h"/>
+  </file>
+  <file name="src/verb/core/BinaryHeap.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/BinaryHeap.h"/>
+   <depend name="include/verb/core/HeapElement.h"/>
+  </file>
+  <file name="src/verb/core/KdTree.cpp" >
+   <depend name="include/verb/core/BinaryHeap.h"/>
+   <depend name="include/verb/core/HeapElement.h"/>
+   <depend name="include/verb/core/KdNode.h"/>
+   <depend name="include/verb/core/KdPoint.h"/>
+   <depend name="include/verb/core/KdTree.h"/>
+  </file>
+  <file name="src/verb/core/KdPoint_verb_core_MeshIntersectionPoint.cpp" >
+   <depend name="include/verb/core/KdPoint_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/KdNode_verb_core_MeshIntersectionPoint.cpp" >
+   <depend name="include/verb/core/KdNode_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdPoint_verb_core_MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/CurvePoint.cpp" >
+   <depend name="include/verb/core/CurvePoint.h"/>
+  </file>
+  <file name="src/verb/core/SurfacePoint.cpp" >
+   <depend name="include/verb/core/SurfacePoint.h"/>
+  </file>
+  <file name="src/verb/core/CurveTriPoint.cpp" >
+   <depend name="include/verb/core/CurveTriPoint.h"/>
+  </file>
+  <file name="src/verb/core/TriSegmentIntersection.cpp" >
+   <depend name="include/verb/core/TriSegmentIntersection.h"/>
+  </file>
+  <file name="src/verb/core/SurfaceSurfaceIntersectionPoint.cpp" >
+   <depend name="include/verb/core/SurfaceSurfaceIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/PolylineMeshIntersection.cpp" >
+   <depend name="include/verb/core/PolylineMeshIntersection.h"/>
+  </file>
+  <file name="src/verb/core/MeshIntersectionPoint.cpp" >
+   <depend name="include/verb/core/MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/CurveSurfaceIntersection.cpp" >
+   <depend name="include/verb/core/CurveSurfaceIntersection.h"/>
+  </file>
+  <file name="src/verb/core/CurveCurveIntersection.cpp" >
+   <depend name="include/verb/core/CurveCurveIntersection.h"/>
+  </file>
+  <file name="src/verb/core/HeapElement_verb_core_KdPoint_verb_core_MeshIntersectionPoint.cpp" >
+   <depend name="include/verb/core/HeapElement_verb_core_KdPoint_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdPoint_verb_core_MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/HeapElement_verb_core_KdNode_verb_core_MeshIntersectionPoint.cpp" >
+   <depend name="include/verb/core/HeapElement_verb_core_KdNode_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/KdNode_verb_core_MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/Interval.cpp" >
+   <depend name="include/verb/core/Interval.h"/>
+  </file>
+  <file name="src/verb/core/Pair.cpp" >
+   <depend name="include/verb/core/Pair.h"/>
+  </file>
+  <file name="src/verb/core/VolumeData.cpp" >
+   <depend name="include/verb/core/SerializableBase.h"/>
+   <depend name="include/verb/core/VolumeData.h"/>
+  </file>
+  <file name="src/verb/core/PolylineData.cpp" >
+   <depend name="include/verb/core/PolylineData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/MeshData.cpp" >
+   <depend name="include/verb/core/MeshData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/NurbsSurfaceData.cpp" >
+   <depend name="include/verb/core/NurbsSurfaceData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/NurbsCurveData.cpp" >
+   <depend name="include/verb/core/NurbsCurveData.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/Ray.cpp" >
+   <depend name="include/verb/core/Ray.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/Plane.cpp" >
+   <depend name="include/verb/core/Plane.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/SerializableBase.cpp" >
+   <depend name="include/haxe/Serializer.h"/>
+   <depend name="include/verb/core/SerializableBase.h"/>
+  </file>
+  <file name="src/verb/core/Constants.cpp" >
+   <depend name="include/verb/core/Constants.h"/>
+  </file>
+  <file name="src/verb/core/BoundingBox.cpp" >
+   <depend name="include/verb/core/BoundingBox.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+  </file>
+  <file name="src/verb/core/Binomial.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/verb/core/Binomial.h"/>
+  </file>
+  <file name="src/verb/core/BinaryHeap_verb_core_KdNode_verb_core_MeshIntersectionPoint.cpp" >
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/verb/core/BinaryHeap_verb_core_KdNode_verb_core_MeshIntersectionPoint.h"/>
+   <depend name="include/verb/core/HeapElement_verb_core_KdNode_verb_core_MeshIntersectionPoint.h"/>
+  </file>
+  <file name="src/verb/core/ArrayExtensions.cpp" >
+   <depend name="include/verb/core/ArrayExtensions.h"/>
+  </file>
+  <file name="src/verb/Verb.cpp" >
+   <depend name="include/haxe/Log.h"/>
+   <depend name="include/verb/Verb.h"/>
+  </file>
+  <file name="src/haxe/iterators/ArrayIterator.cpp" >
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/io/Bytes.cpp" >
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/haxe/ds/StringMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/ds/ObjectMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/ds/_List/ListNode.cpp" >
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+  </file>
+  <file name="src/haxe/ds/List.cpp" >
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+  </file>
+  <file name="src/haxe/ds/IntMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/iterators/ArrayIterator.h"/>
+  </file>
+  <file name="src/haxe/ValueException.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/ValueException.h"/>
+  </file>
+  <file name="src/haxe/Unserializer.cpp" >
+   <depend name="include/Date.h"/>
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Unserializer.h"/>
+   <depend name="include/haxe/_Unserializer/DefaultResolver.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/haxe/_Unserializer/DefaultResolver.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/haxe/_Unserializer/DefaultResolver.h"/>
+  </file>
+  <file name="src/haxe/Serializer.cpp" >
+   <depend name="include/Date.h"/>
+   <depend name="include/Reflect.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/StringBuf.h"/>
+   <depend name="include/StringTools.h"/>
+   <depend name="include/Type.h"/>
+   <depend name="include/ValueType.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/IMap.h"/>
+   <depend name="include/haxe/Serializer.h"/>
+   <depend name="include/haxe/ds/IntMap.h"/>
+   <depend name="include/haxe/ds/List.h"/>
+   <depend name="include/haxe/ds/ObjectMap.h"/>
+   <depend name="include/haxe/ds/StringMap.h"/>
+   <depend name="include/haxe/ds/_List/ListNode.h"/>
+   <depend name="include/haxe/io/Bytes.h"/>
+  </file>
+  <file name="src/haxe/NativeStackTrace.cpp" >
+   <depend name="include/haxe/NativeStackTrace.h"/>
+  </file>
+  <file name="src/haxe/Log.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Log.h"/>
+  </file>
+  <file name="src/haxe/Exception.cpp" >
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+   <depend name="include/haxe/NativeStackTrace.h"/>
+   <depend name="include/haxe/ValueException.h"/>
+  </file>
+  <file name="src/haxe/IMap.cpp" >
+   <depend name="include/haxe/IMap.h"/>
+  </file>
+  <file name="src/Type.cpp" >
+   <depend name="include/Type.h"/>
+   <depend name="include/ValueType.h"/>
+  </file>
+  <file name="src/ValueType.cpp" >
+   <depend name="include/ValueType.h"/>
+  </file>
+  <file name="src/StringTools.cpp" >
+   <depend name="include/StringTools.h"/>
+  </file>
+  <file name="src/StringBuf.cpp" >
+   <depend name="include/StringBuf.h"/>
+  </file>
+  <file name="src/Std.cpp" >
+   <depend name="include/Std.h"/>
+  </file>
+  <file name="src/Reflect.cpp" >
+   <depend name="include/Reflect.h"/>
+  </file>
+  <file name="src/Lambda.cpp" >
+   <depend name="include/Lambda.h"/>
+  </file>
+  <file name="src/Date.cpp" >
+   <depend name="include/Date.h"/>
+   <depend name="include/Std.h"/>
+   <depend name="include/haxe/Exception.h"/>
+  </file>
+  <file name="src/__boot__.cpp" >
+   <depend name="include/ValueType.h"/>
+   <depend name="include/verb/eval/Analyze.h"/>
+   <depend name="include/verb/core/Constants.h"/>
+   <depend name="include/verb/core/Binomial.h"/>
+   <depend name="include/haxe/Unserializer.h"/>
+   <depend name="include/haxe/Serializer.h"/>
+   <depend name="include/haxe/Log.h"/>
+  </file>
+  <file name="src/__files__.cpp" if='HXCPP_DEBUGGER'>
+  </file>
+   <file name="${HXCPP}/src/hx/NoFiles.cpp" unless="HXCPP_DEBUGGER" />
+  <file name="src/__resources__.cpp" >
+  </file>
+</files>
+<files id="__lib__">
+<compilerflag value="-Iinclude"/>
+  <file name="src/__lib__.cpp" >
+   <depend name="include/verb/Verb.h"/>
+  </file>
+</files>
+<files id="__main__">
+<compilerflag value="-Iinclude"/>
+  <file name="src/__main__.cpp" >
+   <depend name="include/verb/Verb.h"/>
+  </file>
+</files>
+<files id="__resources__">
+</files>
+<files id="__externs__">
+</files>
+<set name="HAXE_OUTPUT" value="Verb" />
+<include name="${HXCPP}/build-tool/BuildCommon.xml"/>
+<error value="Hxcpp is out of date - please update" unlessApi="400" />
+</xml>

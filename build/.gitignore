@@ -1,5 +1,3 @@
-cpp
-cs
-python.py
-php
-java
+java/obj
+maven/target
+cpp/obj
