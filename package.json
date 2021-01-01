@@ -8,6 +8,14 @@
     "url": "https://github.com/pboyer/verb.git"
   },
   "scripts": {
+    "build": "npm run build-js && npm run build-java && npm run build-maven && npm run build-python && npm run build-cs && npm run build-php",
+    "build-js": "haxe buildjs.hxml",
+    "build-java": "haxe buildjava.hxml",
+    "build-maven": "npm run build-java && npx copyfiles -u 3 build/java/src/**/*.java build/maven/src/main/java && npx copyfiles -u 2 src/support/pom.xml build/maven",
+    "build-python": "haxe buildpython.hxml",
+    "build-cpp": "haxe buildcpp.hxml",
+    "build-php": "haxe buildphp.hxml",
+    "build-cs": "haxe buildcs.hxml",
     "test": "grunt -v mocha"
   },
   "engine": "node 7.0.0",

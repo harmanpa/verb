@@ -5,27 +5,6 @@ module.exports = function(grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
-    concat: {
-      build: {
-        files: {
-          'build/js/verb.js': [ 'src/support/header.js',
-                                        'build/js/verbHaxe.js',
-                                        'src/support/footer.js',]
-        }
-      }
-    },
-
-    replace: {
-      build: {
-        src: ['build/js/verbHaxe.js'],
-        overwrite: true,                 // overwrite matched source files
-        replacements: [{
-          from: '{log:function(){}}, typeof window != "undefined" ? window : exports',
-          to: '{log:function(){}}, verb'
-        }]
-      }
-    },
-
     uglify: {
       options: {
         banner: '/*! verb <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -68,12 +47,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-benchmark');
 
-  var build_steps = [ 'haxe', 'replace', 'concat', 'uglify' ];
-  grunt.registerTask('default', ['haxe', 'concat', 'replace'] );
+  var build_steps = [ 'haxe', 'uglify' ];
+  grunt.registerTask('default', ['haxe'] );
 
   grunt.registerTask('build', build_steps);
   grunt.registerTask('mocha', ['mochaTest']);
-  grunt.registerTask('test', ['haxe', 'replace','concat', 'mochaTest']);
-  grunt.registerTask('benchmarks', ['concat', 'benchmark']);
+  grunt.registerTask('test', ['haxe', 'mochaTest']);
+  grunt.registerTask('benchmarks', ['benchmark']);
 
 };

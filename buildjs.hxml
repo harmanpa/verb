@@ -1,5 +1,5 @@
 -main verb.Verb
 -cp src
--js build/js/verbHaxe.js
+-js build/js/verb.js
 -dce std
 -D js-es=6

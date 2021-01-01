@@ -2704,7 +2704,7 @@ class verb_Verb:
 
     @staticmethod
     def main():
-        print("verb 2.1.0")
+        print("verb 3.0.0")
 verb_Verb._hx_class = verb_Verb
 _hx_classes["verb.Verb"] = verb_Verb
 
